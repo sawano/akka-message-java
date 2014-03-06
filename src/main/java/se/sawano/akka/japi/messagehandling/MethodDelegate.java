@@ -17,7 +17,6 @@
 package se.sawano.akka.japi.messagehandling;
 
 import net.jcip.annotations.Immutable;
-import net.jcip.annotations.ThreadSafe;
 
 import java.lang.reflect.Method;
 
@@ -51,7 +50,6 @@ import static se.sawano.akka.japi.messagehandling.MethodRepository.repositoryFor
  * @see MessageDelegatingActor
  */
 @Immutable
-@ThreadSafe
 public class MethodDelegate {
 
     private final Object target;

@@ -16,6 +16,8 @@
 
 package se.sawano.akka.japi.messagehandling;
 
+import net.jcip.annotations.Immutable;
+
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -23,6 +25,7 @@ import java.util.HashMap;
 
 import static java.util.Objects.requireNonNull;
 
+@Immutable
 final class MethodRepository {
 
     public static MethodRepository repositoryFor(final Class targetClass) {
