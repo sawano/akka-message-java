@@ -17,7 +17,7 @@ Basics
 For quick and easy use you can use one of the predefined interfaces. Say you have an actor that takes a message `SomeMessage`. By using the
 predefined interface `Messages1` your actor would look something like this.
 
-...java
+```java
 public class SomeActor extends MessageDelegatingActor implements Messages1<SomeMessage> {
 
     @Override
@@ -25,7 +25,7 @@ public class SomeActor extends MessageDelegatingActor implements Messages1<SomeM
         // do stuff ...
     }
 }
-...
+```
 
 Since the method `onMessage(SomeMessage)` is defined in the interface `Messages1` you will get a compile time error if you forget to implement
 the method. The base class `MessageDelegatingActor` is merely there for convenience and you do not have to extend that if you prefer not to.
@@ -34,7 +34,7 @@ It also makes the code more readable since the handled message is more explicit 
 
 An example would be:
 
-...java
+```java
 public interface UserManager extends Messages {
 
     public void userRegistered(UserRegistered event);
@@ -54,7 +54,7 @@ public class UserManagementActor extends MessageDelegatingActor implements UserM
         // Do other stuff
     }
 }
-...
+```
 
 Custom contracts
 ----------------
