@@ -33,7 +33,7 @@ public abstract class MessageDelegatingActor extends UntypedActor {
     }
 
     @Override
-    public void onReceive(Object message) {
+    public void onReceive(final Object message) {
         if (methodDelegate.onReceive(message)) {
             return;
         }

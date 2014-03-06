@@ -75,15 +75,15 @@ final class MethodRepository {
         }
     }
 
-    private void addRequestMethods(Method[] interfaceMethods) {
+    private void addRequestMethods(final Method[] interfaceMethods) {
         addMethodsToMap(interfaceMethods, requestMethods);
     }
 
-    private void addResponseMethods(Method[] interfaceMethods) {
+    private void addResponseMethods(final Method[] interfaceMethods) {
         addMethodsToMap(interfaceMethods, responseMethods);
     }
 
-    private void addMessageMethods(Method[] interfaceMethods) {
+    private void addMessageMethods(final Method[] interfaceMethods) {
         addMethodsToMap(interfaceMethods, messageMethods);
     }
 
@@ -151,7 +151,7 @@ final class MethodRepository {
         return false;
     }
 
-    private boolean isGenericMethod(Method method) {
+    private boolean isGenericMethod(final Method method) {
         return !(method.getGenericParameterTypes()[0] instanceof Class);
     }
 
@@ -159,7 +159,7 @@ final class MethodRepository {
         return type instanceof Class && !Object.class.equals(type);
     }
 
-    private boolean hasSameParameterTypes(Method interfaceMethod, Method targetMethod) {
+    private boolean hasSameParameterTypes(final Method interfaceMethod, final Method targetMethod) {
         return interfaceMethod.getParameterTypes()[0].equals(targetMethod.getParameterTypes()[0]);
     }
 

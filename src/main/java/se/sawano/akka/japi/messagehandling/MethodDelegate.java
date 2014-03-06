@@ -67,7 +67,7 @@ public class MethodDelegate {
      * @throws IllegalStateException
      *         if unable to map the target
      */
-    public MethodDelegate(Object target) {
+    public MethodDelegate(final Object target) {
         requireNonNull(target);
 
         this.target = target;
