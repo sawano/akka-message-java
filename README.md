@@ -84,7 +84,7 @@ Releases are available at the Maven central repository. Or you can just use the 
 ### Scala SBT
 
 ```scala
-libraryDependencies += "se.sawano.akka.japi"
+libraryDependencies += "se.sawano.akka.japi" % "akka-message-java" % "0.0.1"
 ```
 
 etc...
