@@ -66,3 +66,26 @@ Other usage
 ------------
 Please consult the javadoc.
 There are also several example tests in package `se.sawano.akka.japi.messagehandling.examples` that displays several ways of usage.
+
+Getting it
+------------
+Releases are available at the Maven central repository. Or you can just use the source code directly if you prefer that.
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>se.sawano.akka.japi</groupId>
+    <artifactId>akka-message-java</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+### Scala SBT
+
+```scala
+libraryDependencies += "se.sawano.akka.japi"
+```
+
+etc...
+
