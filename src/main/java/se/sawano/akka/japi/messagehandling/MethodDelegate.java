@@ -28,9 +28,10 @@ import static se.sawano.akka.japi.messagehandling.MethodRepository.repositoryFor
  * Requests} and {@link Responses}, or any of their ancestors. Messages are mapped by type so it is not possible to have more than one
  * message receiving method for any given message type. E.g. one cannot map a class implementing the interface {@code Messages2&lt;Double,
  * Double&gt;}. But {@code Messages2&lt;Double, Integer&gt;} would be fine.
- * <p/>
+ * <p>
  * A typical use case would be to create a base actor that takes care of the message delegation and then have other actors extend that base
  * class. For example an implementation of a base actor could look like this:
+ * </p>
  * <pre>
  * public MessageDelegatingActor() {
  *    methodDelegate = new MethodDelegate(this);

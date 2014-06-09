@@ -19,9 +19,9 @@ package se.sawano.akka.japi.messagehandling;
 /**
  * Marker interface for methods logically categorized as receiving "response messages". This interface can be used to create custom
  * interfaces.
- * <p/>
+ * <p>
  * Alternatively one of the predefined interfaces can be used for convenience.
- *
+ * </p>
  * @author Daniel Sawano
  */
 public interface Responses {
