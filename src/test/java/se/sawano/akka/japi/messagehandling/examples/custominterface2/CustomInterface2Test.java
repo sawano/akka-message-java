@@ -20,20 +20,33 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.testkit.JavaTestKit;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class CustomInterface2Test extends JavaTestKit {
-    public CustomInterface2Test() {
-        super(ActorSystem.create());
+public class CustomInterface2Test {
+
+    ActorSystem system;
+
+    @Before
+    public void setUp() throws Exception {
+        system = ActorSystem.create();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        JavaTestKit.shutdownActorSystem(system);
     }
 
     @Test
     public void shouldCommunicateWithActor() throws Exception {
-        final ActorRef actorRef = getSystem().actorOf(Props.create(CustomMessageActor.class));
+        new JavaTestKit(system) {{
+            final ActorRef actorRef = getSystem().actorOf(Props.create(CustomMessageActor.class));
 
-        final SomeMessage msg = new SomeMessage();
-        actorRef.tell(msg, getRef());
+            final SomeMessage msg = new SomeMessage();
+            actorRef.tell(msg, getRef());
 
-        expectMsgAllOf(msg);
+            expectMsgAllOf(msg);
+        }};
     }
 }

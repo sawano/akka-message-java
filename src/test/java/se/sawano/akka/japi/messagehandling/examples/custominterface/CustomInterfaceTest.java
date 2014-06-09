@@ -21,24 +21,29 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.testkit.JavaTestKit;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class CustomInterfaceTest extends JavaTestKit {
+public class CustomInterfaceTest {
 
-    public CustomInterfaceTest() {
-        super(ActorSystem.create());
+    ActorSystem system;
+
+    @Before
+    public void setUp() throws Exception {
+        system = ActorSystem.create();
     }
 
     @After
     public void tearDown() throws Exception {
-        JavaTestKit.shutdownActorSystem(getSystem());
-
+        JavaTestKit.shutdownActorSystem(system);
     }
 
     @Test
     public void shouldName() throws Exception {
-        ActorRef userManager = getSystem().actorOf(Props.create(UserManagementActor.class), "userManager");
-        userManager.tell(new UserRegistered(123L), getRef());
-        userManager.tell(new NameChanged(123L, "John Doe"), getRef());
+        new JavaTestKit(system) {{
+            ActorRef userManager = getSystem().actorOf(Props.create(UserManagementActor.class), "userManager");
+            userManager.tell(new UserRegistered(123L), getRef());
+            userManager.tell(new NameChanged(123L, "John Doe"), getRef());
+        }};
     }
 }

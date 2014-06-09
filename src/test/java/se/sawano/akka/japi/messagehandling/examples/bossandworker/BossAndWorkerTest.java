@@ -22,6 +22,7 @@ import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.testkit.JavaTestKit;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import scala.concurrent.duration.Duration;
 
@@ -29,36 +30,43 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class BossAndWorkerTest extends JavaTestKit {
+public class BossAndWorkerTest {
 
-    final LoggingAdapter log = Logging.getLogger(getSystem(), this);
+    LoggingAdapter log;
+    ActorSystem system;
 
-    public BossAndWorkerTest() {
-        super(ActorSystem.create());
+    @Before
+    public void setUp() throws Exception {
+        system = ActorSystem.create();
+        log = Logging.getLogger(system, this);
     }
 
     @After
     public void tearDown() throws Exception {
-        JavaTestKit.shutdownActorSystem(getSystem());
+        JavaTestKit.shutdownActorSystem(system);
     }
 
     @Test
     public void shouldName() throws Exception {
-        log.info("Telling boss to make worker work...");
-        getSystem().actorOf(Props.create(Boss.class), "boss-actor").tell(new RequestMessage("Make worker work!"), getRef());
+        new JavaTestKit(system) {
+            {
+                log.info("Telling boss to make worker work...");
+                getSystem().actorOf(Props.create(Boss.class), "boss-actor").tell(new RequestMessage("Make worker work!"), getRef());
 
-        final String answer = expectAnswerFromBoss();
-        log.info("Boss says: " + answer);
-        assertEquals("Worker is done", answer);
-    }
-
-    private String expectAnswerFromBoss() {
-        return new ExpectMsg<String>(Duration.create(2, TimeUnit.SECONDS), null) {
-            @Override
-            protected String match(Object o) {
-                return ((ResponseMessage) o).answer;
+                final String answer = expectAnswerFromBoss();
+                log.info("Boss says: " + answer);
+                assertEquals("Worker is done", answer);
             }
-        }.get();
+
+            private String expectAnswerFromBoss() {
+                return new JavaTestKit.ExpectMsg<String>(Duration.create(2, TimeUnit.SECONDS), null) {
+                    @Override
+                    protected String match(Object o) {
+                        return ((ResponseMessage) o).answer;
+                    }
+                }.get();
+            }
+        };
     }
 
 }

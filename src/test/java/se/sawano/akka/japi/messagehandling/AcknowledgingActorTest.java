@@ -22,32 +22,38 @@ import akka.actor.Props;
 import akka.testkit.JavaTestKit;
 import akka.testkit.TestActorRef;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class AcknowledgingActorTest extends JavaTestKit {
+public class AcknowledgingActorTest {
 
-    public AcknowledgingActorTest() {
-        super(ActorSystem.apply());
+    ActorSystem system;
+
+    @Before
+    public void setUp() throws Exception {
+        system = ActorSystem.create();
     }
 
     @After
     public void tearDown() throws Exception {
-        JavaTestKit.shutdownActorSystem(getSystem());
+        JavaTestKit.shutdownActorSystem(system);
     }
 
     @Test
     public void shouldInstantiate() throws Exception {
-        TestActorRef<AcknowledgingActor> ackingActor = TestActorRef.create(getSystem(), Props.create(AcknowledgingActor.class));
+        final TestActorRef<AcknowledgingActor> ackingActor = TestActorRef.create(system, Props.create(AcknowledgingActor.class));
     }
 
     @Test
     public void shouldSendAcknowledgeOnlyOnDeclaredMessageTypes() throws Exception {
-        ActorRef ackingActor = getSystem().actorOf(Props.create(AcknowledgingActor.class), "acking-actor");
-        ackingActor.tell(Integer.valueOf(1), getRef());
-        ackingActor.tell(new Object(), getRef());
+        new JavaTestKit(system) {{
+            final ActorRef ackingActor = getSystem().actorOf(Props.create(AcknowledgingActor.class), "acking-actor");
+            ackingActor.tell(Integer.valueOf(1), getRef());
+            ackingActor.tell(new Object(), getRef());
 
-        expectMsgAllOf(Integer.valueOf(1));
-        expectNoMsg();
+            expectMsgAllOf(Integer.valueOf(1));
+            expectNoMsg();
+        }};
     }
 
 }
