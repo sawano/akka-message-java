@@ -26,7 +26,7 @@ import akka.actor.UntypedActor;
  */
 public abstract class MessageDelegatingActor extends UntypedActor {
 
-    private final MethodDelegate methodDelegate;
+    private transient final MethodDelegate methodDelegate;
 
     public MessageDelegatingActor() {
         methodDelegate = new MethodDelegate(this);
